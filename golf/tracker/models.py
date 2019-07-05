@@ -18,14 +18,19 @@ class Course(models.Model):
 class Player(models.Model):
     name = models.CharField(max_length=200)
     handicap = models.CharField(max_length=200, blank=True, null=True)
-    @property
-    def points(self):
-        return 3
-        
     
+
 
     def __str__(self):
         return self.name
+
+class Season(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    points = models.IntegerField( blank=True, null=True, default=0)
+    wins = models.IntegerField( blank=True, null=True, default=0)
+
+    def __str__(self):
+        return self.player.name
 
 class Match(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -39,12 +44,48 @@ class Match(models.Model):
     player_four_score = models.IntegerField( blank=True, null=True)
     played_date = models.DateTimeField(default=timezone.now)
     ranked = models.BooleanField(blank=True, null=True)
+    points = models.IntegerField( blank=True, null=True)
     @property
     def playerCnt(self):
         fields = self._meta.get_fields()
         fields = [x for x in fields if x in ['player_three','player_four']]
         n_count = len([ x for x in fields if getattr(self, x.name) ]) + 2
         return n_count 
+    def getResults(self):
+        cnt = self.playerCnt
+        scores = [(self.player_one, self.player_one_score),
+                    (self.player_two, self.player_two_score),
+                    (self.player_three, self.player_three_score),
+                    (self.player_four, self.player_four_score)
+            ]
+        scores = scores[0:cnt]
+        scores.sort(key=lambda tup: tup[1])
+        
+        ranks = {}
+        for i , score in enumerate(scores):
+            if i + 1 == 1:
+                dif = 0
+            else:
+                dif = i + 1
+            ranks[score[0]] = (i + 1, self.points - dif )   
+        return ranks
+    
+    def save(self, *args, **kwargs):
+    
+        results = self.getResults()
+        for key, value in results.items():
+            stat = Season.objects.filter(player=key)[0]
+            print(stat)
+            stat.points = stat.points + value[1]
+            if value[0] == 1:
+                stat.wins += 1
+            stat.save()
+            # Object is a new instance
+
+        return super(Match, self).save(*args, **kwargs)     
+            
+
+    
 
 
     
