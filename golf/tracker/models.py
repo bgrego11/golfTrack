@@ -38,6 +38,7 @@ class Match(models.Model):
     player_three_score = models.IntegerField( blank=True, null=True)
     player_four_score = models.IntegerField( blank=True, null=True)
     played_date = models.DateTimeField(default=timezone.now)
+    ranked = models.BooleanField(blank=True, null=True)
     @property
     def playerCnt(self):
         fields = self._meta.get_fields()
