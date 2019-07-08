@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Golf Tracker</title>
+       
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h1 class="text-center">Golf 2019</h1>
+        <div class="players card text-center">
+                <div class="card-header">
+                        <h4>Standings</h4>
+                </div>
+            
+            <table class="table table-sm">
+            <thead>
+                <tr>
+                <th scope="col">Player</th>
+                <th scope="col">Wins</th>
+                <th scope="col">Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% if seasons %}
+                
+                    {% for season in seasons %}
+                <tr>
+                    
+                    <td><a href="/player/{{ season.player.id }}/">{{ season.player.name }}</a></td>
+                    <td>{{ season.wins }}</td>
+                    <td>{{ season.points }}</td>
+                </tr>
+                    {% endfor %}
+                       
+                    {% else %}
+                        <p>No players are available.</p>
+                    {% endif %}
+                
+               
+                
+               
+            </tbody>
+            </table>
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="matches card text-center col-sm-6">
+                <button class="card-header btn" data-toggle="collapse" data-target="#collapseM" type="button" aria-expanded="false" aria-controls="collapseM">
+                     <h4>Matches</h4>
+                </button>
+                <div class="card-body collapse" id="collapseM">
+                {% if matches %}
+                    <ul>
+                    {% for match in matches %}
+                        <li><a href="/matches/{{ match.id }}/">{{ match.course.name }} - </a><span>{{ match.played_date }}</span></li>
+                        
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No players are available.</p>
+                {% endif %}
+                </div>
+            </div>
+
+            <div class="courses card text-center col-sm-6">
+                <div class="card-header">
+                    <h4>Courses</h4>
+                </div>
+                    {% if courses %}
+                        <ul>
+                        {% for course in courses %}
+                            <li><a href="/courses/{{ course.id }}/">{{ course.name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No courses are available.</p>
+                    {% endif %}
+            </div>
+        </div>
+                
+                    
+               
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>

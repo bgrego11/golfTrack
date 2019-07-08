@@ -47,12 +47,16 @@ class Match(models.Model):
     points = models.IntegerField( blank=True, null=True)
     @property
     def playerCnt(self):
-        fields = self._meta.get_fields()
-        fields = [x for x in fields if x in ['player_three','player_four']]
-        n_count = len([ x for x in fields if getattr(self, x.name) ]) + 2
-        return n_count 
+        cnt = 2
+        if self.player_three:
+            cnt +=1
+        if self.player_four:
+            cnt+=1
+        return cnt 
     def getResults(self):
+        
         cnt = self.playerCnt
+        print("p cnt is "+ str(cnt))
         scores = [(self.player_one, self.player_one_score),
                     (self.player_two, self.player_two_score),
                     (self.player_three, self.player_three_score),
@@ -73,6 +77,7 @@ class Match(models.Model):
     def save(self, *args, **kwargs):
     
         results = self.getResults()
+        print(results)
         for key, value in results.items():
             stat = Season.objects.filter(player=key)[0]
             print(stat)
