@@ -1,1 +1,1 @@
-web: gunicorn golf/golf.wsgi --log-file -
+web: gunicorn golf.wsgi --log-file -
