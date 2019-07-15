@@ -17,6 +17,7 @@ class Course(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=200)
+    hometown = models.CharField(max_length=200, blank=True, null=True)
     handicap = models.CharField(max_length=200, blank=True, null=True)
     pic_url = models.URLField(max_length=250, blank=True, null=True)
 
