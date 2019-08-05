@@ -2,3 +2,27 @@ img {
     height: 100px;
     width: 25px;
 }
+
+.card-header {
+    background-color: lavender;
+    width: 100%
+}
+
+.card {
+    max-width: 500px;
+    padding-right: 0px;
+    padding-left: 0px;
+
+}
+
+h1 {
+    background-color: lavender;
+    color: darkgreen;
+    margin: 0px 0px 0px 0px;
+    width: 20%;
+    border: 2px solid darkgreen;
+}
+
+body {
+    background-image: url("https://cdn.vox-cdn.com/thumbor/G96TUCZrvJ9ghFnwKHg8nExgHuk=/0x0:1000x667/1820x1213/filters:focal(0x0:1000x667):format(webp)/cdn.vox-cdn.com/photo_images/2440633/GYI0064281930.jpg")
+}
