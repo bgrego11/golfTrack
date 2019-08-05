@@ -27,6 +27,7 @@
         <![endif]-->
     </head>
     <body>
+        
 
         <div>
             {{ object.course.name }}
@@ -39,6 +40,16 @@
             {{ object.player_two.name }}
             {{ object.player_two_score }}
             <br>
+            {% if object.player_three %}
+            {{ object.player_three.name }}
+            {{ object.player_three_score }}
+            <br>
+            {% endif %}
+            {% if object.player_four %}
+            {{ object.player_four.name }}
+            {{ object.player_four_score }}
+            <br>
+            {% endif %}
             {{ object.points }}
             points
             
